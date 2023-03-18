@@ -19,16 +19,21 @@ client.on("messageCreate", (message) => {
         return;
     }
     console.log("message recvd: ", message.content);
-    if (message.content.toLowerCase().startsWith("gupta")) {
+    if (/gupta/.test(message.content.toLowerCase())) {
         queue.push(message);
     }
 });
+
+function close() {
+    console.log("exiting");
+    client.destroy();
+    process.exit();
+}
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    process.on("exit", () => {
-        console.log("exiting");
-        client.destroy();
-    });
+    process.on("exit", close);
+    process.on("SIGINT", close);
     main();
 });
 
