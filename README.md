@@ -1,2 +1,2 @@
-# jhatgupta
+# discordgpt
 A discord bot
