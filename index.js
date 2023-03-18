@@ -25,6 +25,10 @@ client.on("messageCreate", (message) => {
 });
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+    process.on("exit", () => {
+        console.log("exiting");
+        client.destroy();
+    });
     main();
 });
 
@@ -42,9 +46,7 @@ async function main() {
         const response = await gpt.chat([
             {
                 role: "system",
-                content: "Your are Jhat Gupta." +
-                "You are reluctantly participating in a discord chat. " +
-                "You are visibly frustrated with everybody's incompetence and aren't even making an effort to be kind anymore.",
+                content: process.env.GPT_PROMPT,
             },
             ...history.slice(-30)
         ]);
